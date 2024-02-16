@@ -71,11 +71,17 @@ func main() {
 		fmt.Println(people)
 	*/
 
-	twoMult := makeMult(2)
-	threeMult := makeMult(3)
-	for i := 0; i < 5; i++ {
-		fmt.Println(twoMult(i), threeMult(i))
-	}
+	// twoMult := makeMult(2)
+	// threeMult := makeMult(3)
+	// for i := 0; i < 5; i++ {
+	// 	fmt.Println(twoMult(i), threeMult(i))
+	// }
+
+	// deferExample()
+
+	// goIsCallByValue()
+
+	testModForMapsAndSlices()
 }
 
 // Variadic Input Parameters
@@ -117,4 +123,64 @@ func makeMult(base int) func(int) int {
 	return func(num int) int {
 		return base * num
 	}
+}
+
+// Order of defers and param evaluation logic of defer functions
+func deferExample() int {
+	a := 10
+	defer func(val int) {
+		fmt.Println("first:", val)
+	}(a)
+	a = 20
+	defer func(val int) {
+		fmt.Println("second:", val)
+	}(a)
+	a = 30
+	fmt.Println("exiting:", a)
+	return a
+}
+
+type person struct {
+	name string
+}
+
+func goIsCallByValue() {
+	i := 10
+	s := "hello"
+	p := person{}
+
+	fmt.Println(i, s, p)
+	modFails(i, s, p)
+	fmt.Println(i, s, p)
+}
+
+func modFails(i int, s string, p person) {
+	i = i * 2
+	s = s + "modified"
+	p.name = "Abhinav"
+}
+
+func testModForMapsAndSlices() {
+	m := map[string]int{
+		"a": 0,
+		"b": 1,
+		"c": 2,
+	}
+
+	s := []int{0, 1, 2, 3, 4}
+
+	fmt.Println(m, s)
+	mod(m, s)
+	fmt.Println(m, s)
+}
+
+func mod(m map[string]int, s []int) {
+	m["a"] = 100
+	m["d"] = 1000
+	delete(m, "b")
+
+	for i, v := range s {
+		s[i] = 2 * v
+	}
+	s = append(s, 100)
 }

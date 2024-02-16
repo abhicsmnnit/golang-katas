@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
 )
 
 func main() {
@@ -39,12 +38,44 @@ func main() {
 	// }
 	// fmt.Println(result, remainer)
 
-	result, remainer, error := divAndRemainderNamedReturnVars(10, 3)
-	if error != nil {
-		fmt.Println(error)
-		os.Exit(1)
+	// result, remainer, error := divAndRemainderNamedReturnVars(10, 3)
+	// if error != nil {
+	// 	fmt.Println(error)
+	// 	os.Exit(1)
+	// }
+	// fmt.Println(result, remainer)
+
+	/*
+		type Person struct {
+			FirstName string
+			LastName  string
+			Age       int
+		}
+
+		people := []Person{
+			{"Abhinav", "Verma", 30},
+			{"Prachi", "Jain", 31},
+			{"Siddhanta", "Das", 35},
+		}
+
+		fmt.Println(people)
+
+		sort.Slice(people, func(i, j int) bool {
+			return people[i].LastName < people[j].LastName
+		})
+		fmt.Println(people)
+
+		sort.Slice(people, func(i, j int) bool {
+			return people[i].Age < people[j].Age
+		})
+		fmt.Println(people)
+	*/
+
+	twoMult := makeMult(2)
+	threeMult := makeMult(3)
+	for i := 0; i < 5; i++ {
+		fmt.Println(twoMult(i), threeMult(i))
 	}
-	fmt.Println(result, remainer)
 }
 
 // Variadic Input Parameters
@@ -80,4 +111,10 @@ func divAndRemainderBlankReturns(num, denom int) (result int, remainder int, err
 	}
 	result, remainder = num/denom, num%denom
 	return
+}
+
+func makeMult(base int) func(int) int {
+	return func(num int) int {
+		return base * num
+	}
 }

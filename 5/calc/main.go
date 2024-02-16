@@ -29,10 +29,10 @@ func main() {
 
 func eval(expression []string) (int, error) {
 	m := map[string]func(int, int) int{
-		"+": add,
-		"-": sub,
-		"*": mul,
-		"/": div,
+		"+": func(a, b int) int { return a + b },
+		"-": func(a, b int) int { return a - b },
+		"*": func(a, b int) int { return a * b },
+		"/": func(a, b int) int { return a / b },
 	}
 
 	if len(expression) != 3 {
@@ -56,8 +56,3 @@ func eval(expression []string) (int, error) {
 
 	return m[operator](operand1, operand2), nil
 }
-
-func add(a, b int) int { return a + b }
-func sub(a, b int) int { return a - b }
-func mul(a, b int) int { return a * b }
-func div(a, b int) int { return a / b }

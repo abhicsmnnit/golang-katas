@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	// x := 10
 	// pointerToX := &x
@@ -35,9 +37,28 @@ func main() {
 		fmt.Println(p)
 		fmt.Println(p.firstName, *p.middleName, p.lastName)
 	*/
-
+	stackHeapAllocationTester()
 }
 
 func makePtr[T any](t T) *T {
 	return &t
+}
+
+func stackHeapAllocationTester() {
+	// build the program using go build -gcflags="-m" to see which variables get moved to heap and which ones "escape"
+	a, b := getPtrs()
+
+	// fmt.Println(a, b, *a, *b, &a, &b)
+	fmt.Println(a, b)
+}
+
+func getPtrs() (*int, *int) {
+	a := 10
+	b := 10
+	c := 10
+	d := 10
+
+	fmt.Println(&a, &b, c, d)
+
+	return &a, &b
 }

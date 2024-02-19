@@ -15,6 +15,7 @@ func (p Person) String() string {
 	return fmt.Sprintf("%s %s, age %d", p.firstName, p.lastName, p.age)
 }
 
+// ////////////////////////
 type Counter struct {
 	val      int
 	updateAt time.Time
@@ -29,6 +30,7 @@ func (c Counter) String() string {
 	return fmt.Sprintf("counter: %d, updated at: %v", c.val, c.updateAt)
 }
 
+// ////////////////////////
 type Adder struct {
 	start int
 }
@@ -37,9 +39,11 @@ func (a Adder) AddTo(val int) int {
 	return a.start + val
 }
 
+// ////////////////////////
 type Score int
 type HighScore Score
 
+// ////////////////////////
 type MailCategory int
 
 const (
@@ -50,6 +54,7 @@ const (
 	Spam
 )
 
+// ////////////////////////
 type Employee struct {
 	Id   int
 	Name string
@@ -69,6 +74,7 @@ func (m Manager) getReportsWithName(name string) []Employee {
 	return nil
 }
 
+// ////////////////////////
 type Inner struct {
 	X int
 }
@@ -76,6 +82,20 @@ type Inner struct {
 type Outer struct {
 	Inner
 	X int
+}
+
+// ////////////////////////
+type Reader interface {
+	Read(p []byte) (count int, err error)
+}
+
+type Closer interface {
+	Close() error
+}
+
+type ReadCloser interface {
+	Reader
+	Closer
 }
 
 func main() {
@@ -158,11 +178,12 @@ func main() {
 	// }
 	// fmt.Println(o.X, o.Inner.X) // Explicitly specify the "conflicting" fields
 
-	// Embedding is NOT inheritance!
-	m := Manager{}
-	// var e1 Employee = m // compiler error: Manager "is not" an Employee
-	var e2 Employee = m.Employee // fine: Manager "has" an Empoyee
-	fmt.Println(e2)
+	// // Embedding is NOT inheritance!
+	// m := Manager{}
+	// // var e1 Employee = m // compiler error: Manager "is not" an Employee
+	// var e2 Employee = m.Employee // fine: Manager "has" an Empoyee
+	// fmt.Println(e2)
+
 }
 
 func doUpdateWrong(c Counter) {

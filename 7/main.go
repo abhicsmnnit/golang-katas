@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"time"
 )
 
@@ -28,6 +29,10 @@ func (c *Counter) Increment() {
 
 func (c Counter) String() string {
 	return fmt.Sprintf("counter: %d, updated at: %v", c.val, c.updateAt)
+}
+
+type Incrementer interface {
+	Increment()
 }
 
 // ////////////////////////
@@ -97,6 +102,32 @@ type ReadCloser interface {
 	Reader
 	Closer
 }
+
+// ////////////////////////
+type Doubler interface {
+	Double()
+}
+
+type DoubleInt int
+
+func (di *DoubleInt) Double() {
+	*di = *di * 2
+}
+
+type DoubleIntSlice []int
+
+func (dis DoubleIntSlice) Double() {
+	for i := range dis {
+		dis[i] = 2 * dis[i]
+	}
+}
+
+func DoubleCompare(d1, d2 Doubler) bool {
+	return d1 == d2
+}
+
+// ////////////////////////
+type MyInt int
 
 func main() {
 	// p := Person{"Abhinav", "Verma", 30}
@@ -184,6 +215,60 @@ func main() {
 	// var e2 Employee = m.Employee // fine: Manager "has" an Empoyee
 	// fmt.Println(e2)
 
+	// var incrementer Incrementer
+	// var counterPtr *Counter
+	// fmt.Println(incrementer == nil) // true
+	// fmt.Println(counterPtr == nil)  // true
+	// incrementer = counterPtr
+	// fmt.Println(incrementer == nil) // false. Why? Short answer: incrementer is now pointing to a concrete type (which is nil as well). But since it needs to know what type it is pointing to, it can't stay nil. An instance of an interface is nil when both its type and value are nil. For more details, read book.
+
+	// var di1 DoubleInt = 10
+	// var di2 DoubleInt = 10
+	// var dis1 DoubleIntSlice = []int{1, 2, 3}
+	// var dis2 DoubleIntSlice = []int{1, 2, 3}
+	// fmt.Println(DoubleCompare(&di1, &di2))
+	// fmt.Println(DoubleCompare(&di1, dis1))
+	// fmt.Println(DoubleCompare(dis1, dis2)) // panic: comparing incomparable types
+
+	// var i interface{} // `i` can hold values of any type now
+	// i = 10
+	// i = "Hello"
+	// i = struct {
+	// 	FirstName string
+	// 	LastName  string
+	// }{"Abhinav", "Verma"}
+
+	// var i2 any // `i2` can hold values of any type as well
+	// i2 = 10
+	// i2 = "Hello"
+	// i2 = struct {
+	// 	FirstName string
+	// 	LastName  string
+	// }{"Abhinav", "Verma"}
+	// fmt.Println(i, i2)
+
+	// var i any
+	// var myInt MyInt = 10
+	// i = myInt
+	// fmt.Println(5 + i.(MyInt)) // type assertion in action
+	// // fmt.Println("5" + i.(string)) // panic: interface conversion: interface {} is main.MyInt, not string
+	// // fmt.Println(5 + i.(int))      // This panics as well even though MyInt is an int! panic: interface conversion: interface {} is main.MyInt, not int
+	// i2, ok := i.(int) // comma-ok idiom
+	// if !ok {
+	// 	fmt.Println("Fishy type assertion")
+	// 	return
+	// }
+	// fmt.Println(i2 + 1) // Never reached
+
+	var i any
+	doThings(5)
+	doThings("5")
+	doThings(i)
+	i = MyInt(5)
+	doThings(i)
+	doThings(MyInt(10))
+	doThings(false)
+	doThings([]int{})
 }
 
 func doUpdateWrong(c Counter) {
@@ -202,4 +287,35 @@ func printScore(s Score) {
 
 func printHighScore(h HighScore) {
 	fmt.Println(h)
+}
+
+func doThings(i any) {
+	// Type switch
+	switch j := i.(type) {
+	case nil:
+		// i is nil, type of j is any
+		fmt.Println("nil", j)
+	case int:
+		// j is of type int
+		j++
+		fmt.Println("int", j)
+	case MyInt:
+		// j is of type MyInt
+		j = j + 10
+		fmt.Println("MyInt", j)
+	case io.Reader:
+		// j is of type io.Reader
+		j.Read(nil)
+		fmt.Println("io.Reader", j)
+	case string:
+		// j is a string
+		j = j + "string"
+		fmt.Println("string", j)
+	case bool, rune:
+		// i is either a bool or rune, so j is of type any
+		fmt.Println("bool, or rune", j)
+	default:
+		// no idea what i is, so j is of type any
+		fmt.Println("Nothing matched", j)
+	}
 }

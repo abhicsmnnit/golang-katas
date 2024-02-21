@@ -82,10 +82,10 @@ func main() {
 func parse(exprString string) (*exprTreeNode, error) {
 	// returning a hard-coded value
 
-	// return validTree()
+	return validTree()
 	// return invalidTree1()
 	// return invalidTree2()
-	return invalidTree3()
+	// return invalidTree3()
 }
 
 func validTree() (*exprTreeNode, error) {

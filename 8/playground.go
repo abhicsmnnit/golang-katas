@@ -89,30 +89,58 @@ func divAndRemainder2[T Integer2](num, denom T) (T, T, error) {
 	return num / denom, num % denom, nil
 }
 
+// //////////////////////////
+
+type PrintableInt interface {
+	~int
+	String() string
+}
+
+type MyInt int
+type MyUnprintableInt int
+
+func (mi MyInt) String() string {
+	return fmt.Sprintf("%d", mi)
+}
+
+func PrintInt[T PrintableInt](i T) {
+	fmt.Println(i.String())
+}
+
 func main() {
-	pair1 := Pair[Point2D]{Point2D{10, 10}, Point2D{20, 20}}
-	pair2 := Pair[Point2D]{Point2D{21, 21}, Point2D{30, 30}}
-	fmt.Println(FindCloser(pair1, pair2))
+	/*
+		pair1 := Pair[Point2D]{Point2D{10, 10}, Point2D{20, 20}}
+		pair2 := Pair[Point2D]{Point2D{21, 21}, Point2D{30, 30}}
+		fmt.Println(FindCloser(pair1, pair2))
 
-	pair3 := Pair[Point3D]{Point3D{10, 10, 10}, Point3D{20, 20, 20}}
-	pair4 := Pair[Point3D]{Point3D{21, 21, 21}, Point3D{30, 30, 30}}
-	fmt.Println(FindCloser(pair3, pair4))
+		pair3 := Pair[Point3D]{Point3D{10, 10, 10}, Point3D{20, 20, 20}}
+		pair4 := Pair[Point3D]{Point3D{21, 21, 21}, Point3D{30, 30, 30}}
+		fmt.Println(FindCloser(pair3, pair4))
+	*/
 
-	n1 := 10
-	d1 := 3
-	fmt.Println(divAndRemainder(n1, d1))
+	/*
+		n1 := 10
+		d1 := 3
+		fmt.Println(divAndRemainder(n1, d1))
 
-	n2 := 10_000_000_000_000_000
-	d2 := 3_000_000_000_000_000
-	fmt.Println(divAndRemainder(n2, d2))
+		n2 := 10_000_000_000_000_000
+		d2 := 3_000_000_000_000_000
+		fmt.Println(divAndRemainder(n2, d2))
 
-	n3 := 10_000_000_000_000_000
-	d3 := 0
-	fmt.Println(divAndRemainder(n3, d3))
+		n3 := 10_000_000_000_000_000
+		d3 := 0
+		fmt.Println(divAndRemainder(n3, d3))
 
-	type MyInt int
-	mi1 := MyInt(10)
-	mi2 := MyInt(3)
-	// fmt.Println(divAndRemainder(mi1, mi2)) // compile error: MyInt does not satisfy Integer (possibly missing ~ for int in Integer)
-	fmt.Println(divAndRemainder2(mi1, mi2))
+		type MyInt int
+		mi1 := MyInt(10)
+		mi2 := MyInt(3)
+		// fmt.Println(divAndRemainder(mi1, mi2)) // compile error: MyInt does not satisfy Integer (possibly missing ~ for int in Integer)
+		fmt.Println(divAndRemainder2(mi1, mi2))
+	*/
+
+	mi := MyInt(10)
+	PrintInt(mi)
+	// PrintInt(5) // compiler error: int does not satisfy PrintableInt (missing method String)
+	// mupi := MyUnprintableInt(10) // compile error: MyUnprintableInt does not satisfy PrintableInt (missing method String)
+	// PrintInt(mupi)
 }

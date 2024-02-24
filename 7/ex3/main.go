@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cmp"
 	"io"
 	"os"
 	"slices"
@@ -51,7 +52,8 @@ func (l League) Ranking() []string {
 	result = append(result, l.teams...)
 
 	slices.SortFunc(result, func(team1, team2 string) int {
-		return l.wins[team2] - l.wins[team1]
+		// return l.wins[team2] - l.wins[team1]
+		return cmp.Compare(l.wins[team2], l.wins[team1]) // Sort in desc order of wins
 	})
 
 	return result

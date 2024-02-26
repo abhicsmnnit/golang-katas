@@ -28,9 +28,40 @@ func GenerateErrorBroken(flag bool) error {
 	return genErr
 }
 
+// Correct form 1
+func GenerateErrorOKReturnNil(flag bool) error {
+	if flag {
+		return StatusErr{
+			Status: NotFound,
+		}
+	}
+	return nil
+}
+
+// Correct form 2
+func GenerateErrorUseErrorVar(flag bool) error {
+	var genErr error
+	if flag {
+		genErr = StatusErr{
+			Status: NotFound,
+		}
+	}
+	return genErr
+}
+
 func main() {
 	err := GenerateErrorBroken(true)
 	fmt.Println("GenerateErrorBroken(true) returns non-nil error:", err != nil)
 	err = GenerateErrorBroken(false)
 	fmt.Println("GenerateErrorBroken(false) returns non-nil error:", err != nil)
+
+	err = GenerateErrorOKReturnNil(true)
+	fmt.Println("GenerateErrorOKReturnNil(true) returns non-nil error:", err != nil)
+	err = GenerateErrorOKReturnNil(false)
+	fmt.Println("GenerateErrorOKReturnNil(false) returns non-nil error:", err != nil)
+
+	err = GenerateErrorUseErrorVar(true)
+	fmt.Println("GenerateErrorUseErrorVar(true) returns non-nil error:", err != nil)
+	err = GenerateErrorUseErrorVar(false)
+	fmt.Println("GenerateErrorUseErrorVar(false) returns non-nil error:", err != nil)
 }

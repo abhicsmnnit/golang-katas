@@ -15,20 +15,36 @@ func main() {
 	// 	fmt.Println("Invalid zip file")
 	// }
 
-	err := fileChecker("DefinitelyNotAFile.txt")
-
+	err := fileCheckerWithWrappedError("DefinitelyNotAFile.txt")
 	if err != nil {
 		fmt.Println(err)
 		if wrappedError := errors.Unwrap(err); wrappedError != nil { // Unwrap the error
 			fmt.Println(wrappedError)
 		}
 	}
+
+	err = fileCheckerWithUnwrappedError("DefinitelyNotAFile.txt")
+	if err != nil {
+		fmt.Println(err)
+		if wrappedError := errors.Unwrap(err); wrappedError != nil { // No wrapped error found
+			fmt.Println(wrappedError)
+		}
+	}
 }
 
-func fileChecker(name string) error {
+func fileCheckerWithWrappedError(name string) error {
 	f, err := os.Open(name)
 	if err != nil {
-		return fmt.Errorf("in fileChecker: %w", err) // Wrap the error
+		return fmt.Errorf("in fileChecker: %w", err) // Wrap the error: use %w
+	}
+	f.Close()
+	return nil
+}
+
+func fileCheckerWithUnwrappedError(name string) error {
+	f, err := os.Open(name)
+	if err != nil {
+		return fmt.Errorf("in fileChecker: %v", err) // DON'T wrap the error: use %v
 	}
 	f.Close()
 	return nil

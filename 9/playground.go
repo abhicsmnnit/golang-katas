@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"os"
 )
@@ -15,21 +14,25 @@ func main() {
 	// 	fmt.Println("Invalid zip file")
 	// }
 
-	err := fileCheckerWithWrappedError("DefinitelyNotAFile.txt")
-	if err != nil {
-		fmt.Println(err)
-		if wrappedError := errors.Unwrap(err); wrappedError != nil { // Unwrap the error
-			fmt.Println(wrappedError)
+	/*
+		err := fileCheckerWithWrappedError("DefinitelyNotAFile.txt")
+		if err != nil {
+			fmt.Println(err)
+			if wrappedError := errors.Unwrap(err); wrappedError != nil { // Unwrap the error
+				fmt.Println(wrappedError)
+			}
 		}
-	}
 
-	err = fileCheckerWithUnwrappedError("DefinitelyNotAFile.txt")
-	if err != nil {
-		fmt.Println(err)
-		if wrappedError := errors.Unwrap(err); wrappedError != nil { // No wrapped error found
-			fmt.Println(wrappedError)
+		err = fileCheckerWithUnwrappedError("DefinitelyNotAFile.txt")
+		if err != nil {
+			fmt.Println(err)
+			if wrappedError := errors.Unwrap(err); wrappedError != nil { // No wrapped error found
+				fmt.Println(wrappedError)
+			}
 		}
-	}
+	*/
+
+	doPanic(os.Args[0])
 }
 
 func fileCheckerWithWrappedError(name string) error {
@@ -48,4 +51,8 @@ func fileCheckerWithUnwrappedError(name string) error {
 	}
 	f.Close()
 	return nil
+}
+
+func doPanic(msg string) {
+	panic(msg)
 }

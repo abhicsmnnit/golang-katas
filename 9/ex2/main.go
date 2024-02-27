@@ -29,7 +29,7 @@ func main() {
 			if errors.Is(err, ErrInvalidID) {
 				fmt.Printf("record %d: %+v error: invalid ID: %s\n", count, emp, emp.ID)
 			} else if errors.As(err, &errEmptyField) {
-				fmt.Printf("record %d: %+v error: empty %s\n", count, emp, errEmptyField.EmptyFieldName)
+				fmt.Printf("record %d: %+v error: %v\n", count, emp, errEmptyField)
 			} else {
 				fmt.Printf("record %d: %+v error: %v\n", count, emp, err)
 			}
@@ -115,9 +115,9 @@ func ValidateEmployee(e Employee) error {
 }
 
 type ErrEmptyField struct {
-	EmptyFieldName string
+	emptyFieldName string
 }
 
 func (eef ErrEmptyField) Error() string {
-	return fmt.Sprintf("missing %s", eef.EmptyFieldName)
+	return fmt.Sprintf("empty %s", eef.emptyFieldName)
 }

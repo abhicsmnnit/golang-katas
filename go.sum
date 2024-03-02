@@ -6,6 +6,8 @@ github.com/learning-go-book-2e/formatter v0.0.0-20220918024742-1835a89362c9 h1:T
 github.com/learning-go-book-2e/formatter v0.0.0-20220918024742-1835a89362c9/go.mod h1:oSWgQ535QFRL6yzFCTDjIY6rbo4pJTOB2r4n/W3CHpA=
 github.com/learning-go-book-2e/simpletax v1.0.0 h1:KZU8aXRCHkvgFmBWkVIoGTx50WOve5iXDrbVzXzToHs=
 github.com/learning-go-book-2e/simpletax v1.0.0/go.mod h1:lR4YYZwbDTIvXy0OjSFsN/1VvJaTYTSmz2oiBEfNy/E=
+github.com/learning-go-book-2e/simpletax/v2 v2.0.0 h1:EUFWy1BBA2omgkmJaWxwEFnLF2CL54zCA5Q1fV2veLw=
+github.com/learning-go-book-2e/simpletax/v2 v2.0.0/go.mod h1:yGLh6ngHzJdppiH2ijwioG9F/IVnAfbA7XfWpIYR67g=
 github.com/mattn/go-colorable v0.1.9 h1:sqDoxXbdeALODt0DAeJCVp38ps9ZogZEAXjus69YV3U=
 github.com/mattn/go-colorable v0.1.9/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=
 github.com/mattn/go-isatty v0.0.12/go.mod h1:cbi8OIDigv2wuxKPP5vlRcQ1OAZbq2CE4Kysco4FUpU=

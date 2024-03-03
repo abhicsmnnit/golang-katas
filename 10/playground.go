@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	mymath "github.com/abhicsmnnit/ch10exercise/math"
+	"github.com/abhicsmnnit/ch10exercise/v2/math"
 )
 
 func main() {
@@ -12,5 +12,6 @@ func main() {
 		fmt.Printf(" %p %p\n", &i, &v) // Different variables in go1.22 and later; same before that.
 	}
 
-	fmt.Println(mymath.Add(10, 10))
+	fmt.Println(math.Add(10, 10))
+	fmt.Println(math.Add(10.01, 10.01))
 }

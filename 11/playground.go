@@ -15,6 +15,9 @@ func main() {
 	}
 	err = returnErr(true) // 2 issues highligted by staticcheck here
 	fmt.Println("end of program")
+
+	true := false // can be highlighted by revive tool and certain config files. Run `revive -config built_in.toml ./...`.
+	fmt.Println(true)
 }
 
 func returnErr(hitMe bool) error {

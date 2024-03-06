@@ -7,6 +7,7 @@ require (
 	github.com/learning-go-book-2e/formatter v0.0.0-20220918024742-1835a89362c9
 	github.com/learning-go-book-2e/simpletax/v2 v2.0.0
 	github.com/shopspring/decimal v1.3.1
+	google.golang.org/protobuf v1.33.0
 )
 
 require (

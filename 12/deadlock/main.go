@@ -9,10 +9,10 @@ func main() { // creates a deadlock
 	go func() {
 		ch1 <- 10
 		ch2Val := <-ch2
-		fmt.Println("", ch2Val)
+		fmt.Println("goroutine:", ch2Val)
 	}()
 
-	ch2 <- 10
+	ch2 <- 20
 	ch1Val := <-ch1
-	fmt.Println(ch1Val)
+	fmt.Println("main:", ch1Val)
 }

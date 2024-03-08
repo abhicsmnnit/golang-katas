@@ -1,5 +1,10 @@
 package main
 
+import (
+	"context"
+	"fmt"
+)
+
 func main() {
 	// x := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 	// result := processConcurrently(x)
@@ -18,16 +23,44 @@ func main() {
 	// 	fmt.Println(v)
 	// }
 
+	// This communicates to the goroutine in countToWithCtx via context, so it can clean up and avoid "leaking"
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	for v := range countToWithCtx(10, ctx) {
+		if v > 5 {
+			break
+		}
+		fmt.Println(v)
+	}
+}
+
+func countToWithCtx(num int, ctx context.Context) <-chan int {
+	ch := make(chan int)
+
+	go func() {
+		defer close(ch)
+		for i := 0; i < num; i++ {
+			select {
+			case ch <- i:
+			case <-ctx.Done():
+				return
+			}
+		}
+	}()
+
+	return ch
 }
 
 func countTo(num int) <-chan int {
 	ch := make(chan int)
+
 	go func() {
 		for i := 0; i < num; i++ {
 			ch <- i
 		}
 		close(ch)
 	}()
+
 	return ch
 }
 

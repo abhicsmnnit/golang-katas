@@ -15,11 +15,15 @@ func main() {
 
 func timeLimit[T any](worker func() T, limit time.Duration) (T, error) {
 	out := make(chan T, 1)
+
 	ctx, cancel := context.WithTimeout(context.Background(), limit)
+
 	defer cancel()
+
 	go func() {
 		out <- worker()
 	}()
+
 	select {
 	case result := <-out:
 		return result, nil

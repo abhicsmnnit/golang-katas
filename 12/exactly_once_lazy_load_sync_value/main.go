@@ -27,13 +27,13 @@ func Parse(dataToParse string) string {
 func initParser() Parser {
 	// do all sorts of setup and loading here
 	fmt.Println("Initializing...")
-	return SCPI{}
+	return SloooooooooowInitParser{}
 }
 
-type SCPI struct {
+type SloooooooooowInitParser struct {
 }
 
-func (s SCPI) Parse(in string) string {
+func (s SloooooooooowInitParser) Parse(in string) string {
 	if len(in) > 1 {
 		return in[0:1]
 	}

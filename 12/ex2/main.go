@@ -36,14 +36,14 @@ func main() {
 				count++
 				break
 			}
-			fmt.Println(v)
+			fmt.Println(v, 1)
 		case v, ok := <-ch2:
 			if !ok {
 				ch2 = nil
 				count++
 				break
 			}
-			fmt.Println(v)
+			fmt.Println(v, 2)
 		}
 	}
 }
